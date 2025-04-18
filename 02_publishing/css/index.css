@@ -83,7 +83,7 @@ width:100%;
 height:100%;
 perspective:800px;
 }
-.card-inner {
+/* .card-inner {
 width:100%;
 height:100%;
 transition:transform 0.6s;
@@ -92,7 +92,19 @@ position:relative;
 }
 .card-inner.flipped {
 transform:rotateY(180deg);
+} */
+.card-inner {
+  width:100%;
+  height:100%;
+  transform: translateY(20px);
+  /* opacity: 0; */
+  transition: all 0.5s ease;
 }
+.card-inner.active {
+  transform: translateY(0);
+  /* opacity: 1; */
+}
+
 .face {
 position:absolute;
 width:100%;
@@ -133,6 +145,17 @@ z-index:100;
 padding:1rem;
 }
 .overlay-content {position:relative;background: #fff;padding:5rem 1.5rem;border-radius: 22px;max-width:90%;width:100%;max-height:90%;/* overflow-y:auto; */color:#333;text-align:center;box-shadow: 0 4px 10px rgba(0,0,0,0.2);}
+
+/* 팝업창 전체를 플립 카드처럼 보이게 만들기 */
+#overlay .overlay-content {
+  transform: rotateY(90deg);
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease;
+}
+#overlay.show .overlay-content {
+  transform: rotateY(0deg);
+}
+
 .close-btn {position:absolute;top: -60px;left: 50%;transform: translateX(-50%);border:none;font-size:1.5rem;cursor:pointer;color:#aaa;background: #fff;border-radius: 100%;width: 50px;height: 50px;}
 #overlayText {margin-bottom: 3rem;word-break:keep-all;font-size:1.1rem;font-family: 'Cafe24Ssurround';  white-space: pre-line;}
 #overlay input {

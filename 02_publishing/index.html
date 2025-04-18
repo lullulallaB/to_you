@@ -34,7 +34,7 @@
       <h2>바로 지금, 당신 곁에 머무르는<br/> 위로의 한 줄을 만나보세요.</h2>
 
       <div class="swiper-container"><div class="swiper-wrapper" id="cards"></div></div>
-      <audio id="sound" src="bus_button.mp3" preload="auto"></audio>
+      <audio id="sound" src="" preload="auto"></audio>
       <div id="overlay"><div class="overlay-content">
           <button class="close-btn" id="overlayClose">╳</button>
           <div id="overlayText">내용</div>
@@ -151,8 +151,12 @@
 
       // 카드 플립 애니메이션
       const inner = slide.querySelector('.card-inner');
-      inner.classList.add('flipped');
-      hasFlipped = true;
+      // inner.classList.add('flipped');
+      inner.classList.add('active');
+      setTimeout(() => {
+        document.getElementById('overlay').classList.add('show'); // 0.5초 뒤 팝업
+      }, 500);
+      // hasFlipped = true;
 
       // 배경 스크롤 잠금
       document.body.classList.add('no-scroll');
@@ -194,6 +198,12 @@
     document.getElementById('overlayClose').addEventListener('click', () => {
       document.getElementById('overlay').style.display = 'none';
       document.body.classList.remove('no-scroll');
+      // 활성화된 카드에서 active 제거
+      document.querySelector('.card-inner.active')?.classList.remove('active');
+      // 1. show 클래스 제거 (있다면)
+      document.getElementById('overlay').classList.remove('show');
+      
+
       hasFlipped = false;
       const prevFlip = document.querySelector('.card-inner.flipped');
       if (prevFlip) prevFlip.classList.remove('flipped');
