@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>오늘도 잘 버틴 당신에게</title>
+
+  <!-- Swiper CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+  <!-- index CSS -->
+  <link rel="stylesheet" href="./css/index.css">
+
+
+</head>
+<body>
+    <div class="controls">
+        <select id="langSelect">
+          <option value="ko">🇰🇷 한국어</option>
+          <option value="en">🇺🇸 English</option>
+          <option value="ja">🇯🇵 日本語</option>
+          <option value="zh">🇨🇳 中文</option>
+        </select>
+      </div>
+      
+      <h1 id="title">오늘도 잘 버틴 <span>당신</span>에게</h1>
+      <h2>바로 지금, 당신 곁에 머무르는<br/> 위로의 한 줄을 만나보세요.</h2>
+
+      <div class="swiper-container"><div class="swiper-wrapper" id="cards"></div></div>
+      <audio id="sound" src="bus_button.mp3" preload="auto"></audio>
+      <div id="overlay"><div class="overlay-content">
+          <button class="close-btn" id="overlayClose">╳</button>
+          <div id="overlayText">내용</div>
+          <div class="share-buttons">
+            <button class="like-btn">❤️ 공감</button>
+            <button class="copy-btn">📋 복사</button>
+          </div>
+        </div></div>
+        <p style="font-size: 0.8rem;
+        color: #888;
+        text-align: center;
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);">
+        Illustration by <a href="https://storyset.com/" target="_blank" style="color: #888; text-decoration: none;">Storyset</a>
+        </p>
+          
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+  <script>
+    // 뒤집기 상태 플래그
+    let hasFlipped = false;
+
+    // 다국어 처리: 언어 선택에 따른 타이틀 변경
+    const i18n = {
+    ko: {
+        title: '오늘도 잘 버틴 <span>당신</span>에게'
+    },
+    en: {
+        title: 'To You Who Made It Through Today'
+    },
+    ja: {
+        title: '今日も頑張ったあなたへ'
+    },
+    zh: {
+        title: '致今天也努力撑过来的你'
+    }
+    };
+    
+    const langSelect = document.getElementById('langSelect');
+    langSelect.addEventListener('change', e => {
+        document.getElementById('title').innerHTML = i18n[langSelect.value].title;
+    });
+    // 초기 타이틀 설정
+    document.getElementById('title').innerHTML = i18n[langSelect.value].title;
+
+    // 카드 문장 데이터 배열
+    const texts = [
+        "남들은 잘 사는 것 같아도, 다 자기만의 전쟁 중이야.\n오늘도 살아낸 너, 잘한 거야.",
+        "무기력한 날이 계속된다고 해서,\n네가 게으른 사람이 되는 건 아니야.",
+        "아무것도 안 해도 괜찮아.\n숨 쉬는 것도 요즘 같은 날엔 충분히 큰일이야.",
+        "마음이 늦게 따라올 때도 있어.\n조급하지 않아도 돼.",
+        "버틴다는 건,\n 멋진 선택이 아니라 필요한 선택일 때가 많아.\n그걸 해낸 넌 대단해.",
+        "남들이 안 본다고 해서\n너의 애씀까지 사라지는 건 아니야.",
+        "하루를 버텼다는 건,\n오늘 해야 할 가장 중요한 일을 해낸 거야.",
+        "괜찮은 척도 사실,\n얼마나 용기 내고 있는 건지 난 알아.",
+        "일이 안 풀리는 날이 계속돼도,\n그게 너 자체의 가치랑은 아무 상관없어.",
+        "가끔은 아무 일도 일어나지 않은 하루가,\n가장 평화로운 성과야.",
+        "오늘 안 울었으면,\n그걸로 이미 상 줘야 해.",
+        "하기 싫은 걸 ‘안 했다’는 것도\n사실 굉장한 결단력이야.",
+        "기분이 찌뿌둥한 날엔\n이불이 날 안아줘야 하거든.",
+        "무기력도 요즘 트렌드야.\n넌 그냥 유행 빠른 거야.",
+        "일단 버텼으면 대단한 거야.\n중간에 퇴사 안 했잖아, 인생에서.",
+        "네가 지금 이걸 읽고 있다는 건,\n아직 안 망했다는 증거야.",
+        "마음이 시무룩하면,\n아무 이유 없이 밥을 먹어도 돼.",
+        "잘한 게 없다는 말, 좀 거짓말 같아.\n오늘 숨 쉬었잖아.",
+        "아무것도 안 하고 싶다는 생각조차 안 나는 날도 있지.\n그럴 땐 그냥 멍이 정답이야.",
+        "계획이 없어서 망한 게 아니야.\n그냥 오늘은 마음이 회의 중이었던 거야.",
+        "괜찮다고 말 안 해도 돼.\n안 괜찮은 거, 괜찮아.",
+        "네가 뭘 하든 나는 네 편이야.\n네가 아무것도 안 해도... 난 그래도 네 편이야.",
+        "오늘 망한 거 같다고?\n내 기준에선 완전 성공인데?",
+        "아직 시작도 안 했다고?\n야 그게 똑똑한 거야. 체력 아끼는 거.",
+        "하루 종일 누워만 있었어도,\n그건 ‘에너지 재정비’였던 걸로 할게.",
+        "솔직히 이 정도면\n그냥 ‘사는 것 자체’가 엄청난 업적 아님?",
+        "자책할 시간에 라면 하나 끓여 먹어.\n탄수화물이 우선이야.",
+        "포기한 게 아니야. 전략적 유보지.\n지금 잠깐 기다리는 중이야.",
+        "그냥 숨 쉬고 있다는 것만으로도,\n세상에 기여하고 있어.",
+        "계획이 틀어진 게 아니라,\n우주가 널 위해 약간 우회로 튼 거야."
+    ];
+
+
+    // 카드 요소 생성 및 DOM에 삽입
+    const wrapper = document.getElementById('cards');
+    texts.forEach(txt => {
+      const slide = document.createElement('div');
+      slide.className = 'swiper-slide';
+      slide.innerHTML = `
+        <div class="card">
+          <div class="card-inner">
+            <div class="face front"></div>
+            <div class="face back">${txt}</div>
+          </div>
+        </div>`;
+      wrapper.append(slide);
+    });
+
+    // Swiper 초기화 (가로 슬라이드 레이아웃)
+    const swiper = new Swiper('.swiper-container', {
+      slidesPerView: 'auto',
+      grabCursor: true,
+      spaceBetween: -60,
+      speed: 500
+    });
+
+    // 클릭 이벤트: 카드 선택, 플립, 효과음 재생 & 팝업 표시
+    wrapper.addEventListener('click', e => {
+      if (hasFlipped) return; // 이미 뒤집은 카드가 있으면 무시
+      const slide = e.target.closest('.swiper-slide');
+      if (!slide) return;
+
+      // 이전 선택 해제 후 현재 슬라이드에 selected 클래스 추가
+      document.querySelectorAll('.swiper-slide.selected').forEach(s => s.classList.remove('selected'));
+      slide.classList.add('selected');
+
+      // 카드 플립 애니메이션
+      const inner = slide.querySelector('.card-inner');
+      inner.classList.add('flipped');
+      hasFlipped = true;
+
+      // 배경 스크롤 잠금
+      document.body.classList.add('no-scroll');
+
+      // 효과음 재생
+      const sound = document.getElementById('sound');
+      sound.currentTime = 0;
+      sound.play().catch(() => {});
+
+      // 팝업창 표시: 뒷면 텍스트와 함께
+      const text = inner.querySelector('.back').textContent;
+      document.getElementById('overlayText').textContent = text;
+      document.getElementById('overlay').style.display = 'flex';
+    });
+
+    // ❤️ 공감 클릭 시
+    document.querySelector('.like-btn').addEventListener('click', () => {
+        const likedText = document.getElementById('overlayText').textContent;
+        // 콘솔 + GA 이벤트 전송
+        console.log('공감 누름:', likedText);
+        if (window.gtag) {
+            gtag("event", "like_button_click", {
+            event_category: "engagement",
+            event_label: likedText
+            });
+        }
+        alert("이 문장에 공감해 주셔서 고마워요 🥹");
+    });
+
+    // 📋 복사하기 클릭 시
+    document.querySelector('.copy-btn').addEventListener('click', () => {
+        const text = document.getElementById('overlayText').textContent;
+        navigator.clipboard.writeText(text).then(() => {
+            alert("🌿 위로 한 줄이 복사되었어요!\n당신의 하루에 작은 힘이 되길 바랄게요.");
+        });
+    });
+    
+    // 팝업 닫기 버튼 이벤트: 상태 초기화
+    document.getElementById('overlayClose').addEventListener('click', () => {
+      document.getElementById('overlay').style.display = 'none';
+      document.body.classList.remove('no-scroll');
+      hasFlipped = false;
+      const prevFlip = document.querySelector('.card-inner.flipped');
+      if (prevFlip) prevFlip.classList.remove('flipped');
+      document.querySelectorAll('.swiper-slide.selected').forEach(s => s.classList.remove('selected'));
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+    const count = 10;
+    for (let i = 0; i < count; i++) {
+      const circle = document.createElement('div');
+      circle.classList.add('blur-circle');
+
+      // 랜덤 크기 (50~150px)
+      const size = Math.floor(Math.random() * 100) + 50;
+      circle.style.width = `${size}px`;
+      circle.style.height = `${size}px`;
+
+      // 랜덤 위치 (viewport 기준)
+      const top = Math.random() * 100;
+      const left = Math.random() * 100;
+      circle.style.top = `${top}vh`;
+      circle.style.left = `${left}vw`;
+
+      document.body.appendChild(circle);
+    }
+  });
+  </script>
+</body>
+</html>
