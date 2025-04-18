@@ -1,2 +1,8 @@
 [build]
   publish = "02_publishing"
+
+[[redirects]]
+  from = "/u"
+  to = "https://toyouwhomadeitthroughtoday.netlify.app/?utm_source=threads&utm_medium=social&utm_campaign=first_sentence_launch&utm_content=comfort_card"
+  status = 302
+  force = true
