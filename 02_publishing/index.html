@@ -21,14 +21,14 @@
   <link rel="stylesheet" href="./css/index.css">
 </head>
 <body>
-    <div class="controls" style="display: none;">
-        <select id="langSelect">
-          <option value="ko">🇰🇷 한국어</option>
-          <option value="en">🇺🇸 English</option>
-          <option value="ja">🇯🇵 日本語</option>
-          <option value="zh">🇨🇳 中文</option>
-        </select>
-      </div>
+  <div class="lang-control">
+    <select id="langSelect">
+      <option value="ko">🇰🇷 한국어</option>
+      <option value="en">🇺🇸 English</option>
+      <option value="ja">🇯🇵 日本語</option>
+      <option value="zh">🇨🇳 中文</option>
+    </select>
+  </div>
       
       <h1 id="title">오늘도 잘 버틴 <span>당신</span>에게</h1>
       <h2>바로 지금, 당신 곁에 머무르는<br/> 위로의 한 줄을 만나보세요.</h2>
@@ -61,175 +61,262 @@
     // 다국어 처리: 언어 선택에 따른 타이틀 변경
     const i18n = {
     ko: {
-        title: '오늘도 잘 버틴 <span>당신</span>에게'
+        title: '오늘도 잘 버틴 <span>당신</span>에게',
+        // 카드 문장 데이터 배열
+        texts: [
+            "남들은 잘 사는 것 같아도, 다 자기만의 전쟁 중이야.\n오늘도 살아낸 너, 잘한 거야.",
+            "무기력한 날이 계속된다고 해서,\n네가 게으른 사람이 되는 건 아니야.",
+            "아무것도 안 해도 괜찮아.\n숨 쉬는 것도 요즘 같은 날엔 충분히 큰일이야.",
+            "마음이 늦게 따라올 때도 있어.\n조급하지 않아도 돼.",
+            "버틴다는 건,\n 멋진 선택이 아니라 필요한 선택일 때가 많아.\n그걸 해낸 넌 대단해.",
+            "남들이 안 본다고 해서\n너의 애씀까지 사라지는 건 아니야.",
+            "하루를 버텼다는 건,\n오늘 해야 할 가장 중요한 일을 해낸 거야.",
+            "괜찮은 척도 사실,\n얼마나 용기 내고 있는 건지 난 알아.",
+            "일이 안 풀리는 날이 계속돼도,\n그게 너 자체의 가치랑은 아무 상관없어.",
+            "가끔은 아무 일도 일어나지 않은 하루가,\n가장 평화로운 성과야.",
+            "오늘 안 울었으면,\n그걸로 이미 상 줘야 해.",
+            "하기 싫은 걸 ‘안 했다’는 것도\n사실 굉장한 결단력이야.",
+            "기분이 찌뿌둥한 날엔\n이불이 날 안아줘야 하거든.",
+            "무기력도 요즘 트렌드야.\n넌 그냥 유행 빠른 거야.",
+            "일단 버텼으면 대단한 거야.\n중간에 퇴사 안 했잖아, 인생에서.",
+            "네가 지금 이걸 읽고 있다는 건,\n아직 안 망했다는 증거야.",
+            "마음이 시무룩하면,\n아무 이유 없이 밥을 먹어도 돼.",
+            "잘한 게 없다는 말, 좀 거짓말 같아.\n오늘 숨 쉬었잖아.",
+            "아무것도 안 하고 싶다는 생각조차 안 나는 날도 있지.\n그럴 땐 그냥 멍이 정답이야.",
+            "계획이 없어서 망한 게 아니야.\n그냥 오늘은 마음이 회의 중이었던 거야.",
+            "괜찮다고 말 안 해도 돼.\n안 괜찮은 거, 괜찮아.",
+            "네가 뭘 하든 나는 네 편이야.\n네가 아무것도 안 해도... 난 그래도 네 편이야.",
+            "오늘 망한 거 같다고?\n내 기준에선 완전 성공인데?",
+            "아직 시작도 안 했다고?\n야 그게 똑똑한 거야. 체력 아끼는 거.",
+            "하루 종일 누워만 있었어도,\n그건 ‘에너지 재정비’였던 걸로 할게.",
+            "솔직히 이 정도면\n그냥 ‘사는 것 자체’가 엄청난 업적 아님?",
+            "자책할 시간에 라면 하나 끓여 먹어.\n탄수화물이 우선이야.",
+            "포기한 게 아니야. 전략적 유보지.\n지금 잠깐 기다리는 중이야.",
+            "그냥 숨 쉬고 있다는 것만으로도,\n세상에 기여하고 있어.",
+            "계획이 틀어진 게 아니라,\n우주가 널 위해 약간 우회로 튼 거야."
+        ]
     },
     en: {
-        title: 'To You Who Made It Through Today'
+        title: 'To You Who Made It Through Today',
+        texts: [
+          "Even if it seems like others have it all,\neveryone’s fighting their own battles.\nYou made it through. That’s enough.",
+          "Feeling unmotivated doesn’t mean\nyou’re lazy. You’re still doing your best.",
+          "Doing nothing is okay.\nJust breathing is enough some days.",
+          "Sometimes your heart takes a little longer\nto catch up. Don’t rush.",
+          "Enduring isn’t always brave—it’s just necessary.\nAnd you did it. That’s incredible.",
+          "Just because no one sees it,\ndoesn’t mean your effort disappears.",
+          "Getting through the day\nmeans you’ve already done the most important thing.",
+          "Pretending to be okay\ntakes more courage than people think. I see you.",
+          "A rough day doesn’t define you.\nYour worth isn’t tied to your productivity.",
+          "A day with nothing special\ncan be the most peaceful victory.",
+          "If you didn’t cry today,\nyou deserve an award already.",
+          "Choosing not to do something you hate\nis still a powerful decision.",
+          "On cloudy days,\nlet your blanket hug you instead.",
+          "Low energy is trendy now.\nYou’re just ahead of the curve.",
+          "You made it through.\nYou didn’t quit on life. That’s huge.",
+          "If you’re reading this,\nit means you’re still standing.",
+          "When your heart feels heavy,\nsometimes food is reason enough.",
+          "Saying 'I didn’t do anything right'\nisn’t true. You breathed today.",
+          "Some days, even thoughts disappear.\nIt’s okay to just stare blankly.",
+          "Lack of plans doesn’t mean failure.\nMaybe your heart needed a break.",
+          "You don’t have to say 'I’m okay.'\nNot being okay is totally fine.",
+          "No matter what you do,\nI’m on your side—even if you do nothing.",
+          "Think today was a mess?\nTo me, it was a success.",
+          "Not started yet?\nThat’s smart. You’re saving energy.",
+          "Spent all day lying down?\nLet’s call it energy recovery.",
+          "Honestly, just existing\nis already an achievement.",
+          "Instead of blaming yourself,\nmake some noodles. Carbs first.",
+          "You didn’t give up. It’s strategic waiting.\nYou're just pausing.",
+          "Breathing alone means\nyou’re still contributing to the world.",
+          "Plans didn’t fail.\nThe universe just rerouted for you."
+        ]
     },
     ja: {
-        title: '今日も頑張ったあなたへ'
+        title: '今日も頑張ったあなたへ',
+        texts: [
+          "他人がうまくやっているように見えても、\nみんな自分だけの戦いをしてるんだよ。\n今日も乗り越えたあなた、すごいよ。",
+          "やる気が出ない日が続いても、\nそれは怠けている証拠じゃない。",
+          "何もしなくて大丈夫。\n息をしてるだけで、十分がんばってるよ。",
+          "心が追いつかない日もある。\n焦らなくて大丈夫。",
+          "耐えることは、\nカッコいい選択じゃなくて必要な選択のことも。\nそれをやり遂げたあなた、偉い！",
+          "誰にも見られていなくても、\nあなたの努力は消えたりしないよ。",
+          "今日一日を乗り越えたなら、\nそれが一番大切なことだよ。",
+          "「平気なふり」って、\n実はすごく勇気がいること。\n私は分かってるよ。",
+          "うまくいかない日が続いても、\nあなたの価値には関係ない。",
+          "何もなかった日こそ、\n心が穏やかだった証拠かも。",
+          "今日、泣かなかったなら、\nそれだけで賞をあげたい。",
+          "やりたくないことを「やらなかった」って、\n本当にすごい選択だよ。",
+          "気分がどんよりの日は、\n毛布に包まれて癒されよう。",
+          "無気力は今のトレンド。\nあなたは時代の最先端。",
+          "とりあえず耐え抜いた。\n人生を途中で辞めなかったんだ。\nすごいよ。",
+          "今これを読んでいるあなたは、\nまだ負けてない証拠だよ。",
+          "心が沈んでるときは、\n理由がなくてもご飯を食べていいんだよ。",
+          "「何もできなかった」って、\nそれは本当じゃない。\n今日もちゃんと呼吸してたじゃん。",
+          "何も考えたくない日もある。\nそんな日は、ただボーっとしててOK。",
+          "計画がないのは失敗じゃない。\n心が会議中だっただけ。",
+          "「大丈夫」って言わなくていいよ。\n大丈夫じゃなくても、いいんだよ。",
+          "何をしてても、私はあなたの味方。\n何もしなくても、味方だよ。",
+          "「今日はダメだった」って思ってる？\n私から見れば、十分成功だよ。",
+          "「まだ始めてない」って？\nそれは賢い。体力温存中なんだよ。",
+          "一日中ゴロゴロしてたって、\nそれは「エネルギー回復」だったってことにしよう。",
+          "正直、それだけでもう\n「生きてる」ことがすごい。",
+          "自己嫌悪するくらいなら、\nラーメン作ろう。炭水化物が優先だよ。",
+          "諦めたんじゃないよ。\n戦略的に待ってるだけ。",
+          "ただ息をしてるだけでも、\n世界にちゃんと貢献してるよ。",
+          "計画が狂ったんじゃない。\n宇宙があなたのために、遠回りしてるだけ。"
+        ]
+
     },
     zh: {
-        title: '致今天也努力撑过来的你'
+        title: '致今天也努力撑过来的你',
+        texts: [
+          "即使别人看起来过得不错，\n其实每个人都有自己的战争。\n你撑过来了，已经很棒了。",
+          "持续无力感，并不代表你懒。\n你已经够努力了。",
+          "什么都不做也没关系。\n在这种日子里，好好呼吸就很了不起。",
+          "有时候，心会慢一点没关系，\n别急。",
+          "坚持下去，并不总是英雄行为，\n而是必要的选择。\n你做到了，真的了不起。",
+          "即使没人看到，\n你的努力也不会白费。",
+          "能撑过一天，\n就已经完成了最重要的事。",
+          "假装没事，其实很需要勇气。\n我知道你在努力。",
+          "糟糕的日子不代表你一无是处。\n你的价值不会因此减少。",
+          "偶尔什么都没发生的一天，\n也是一种平静的成就。",
+          "今天没哭，\n已经值得奖励了。",
+          "拒绝做讨厌的事，\n也是一种了不起的决断。",
+          "心情低落的日子，\n就让被子抱抱你吧。",
+          "无力感也是趋势，\n你只是走在前头而已。",
+          "你能撑到现在，\n代表你没在生活中“辞职”。\n很棒了。",
+          "你能读到这段话，\n就是还没被击倒的证明。",
+          "心情低落时，\n没有理由也可以吃顿饭。",
+          "说自己没做好，其实不对。\n你今天有好好活着。",
+          "连“什么都不想做”的念头都没了？\n那就发呆吧，发呆才是答案。",
+          "不是没计划就等于失败。\n只是今天你的心在开会。",
+          "不需要说“我没事”。\n不没事，也没关系。",
+          "无论你做什么，\n我都站在你这边。\n你什么都不做，我也支持你。",
+          "你觉得今天失败了？\n在我看来，超成功！",
+          "还没开始？\n这才聪明，省点力气先。",
+          "整天躺着？\n那是能量恢复，没错。",
+          "光是“活着”，\n就已经是一种成就。",
+          "别责怪自己，\n先煮碗面。碳水优先！",
+          "不是放弃，是战略性等待。\n现在只是休息一下。",
+          "光是呼吸，\n你就在为这个世界贡献。",
+          "计划没有变化，\n只是宇宙替你绕了个弯。"
+        ]
+
     }
     };
-    
+
+    function renderCardsByLang(lang) {
+      const wrapper = document.getElementById('cards');
+      wrapper.innerHTML = '';
+      const texts = i18n[lang].texts;
+      texts.forEach(txt => {
+        const slide = document.createElement('div');
+        slide.className = 'swiper-slide';
+        slide.innerHTML = `
+          <div class="card">
+            <div class="card-inner">
+              <div class="face front"></div>
+              <div class="face back">${txt.replace(/\n/g, '<br/>')}</div>
+            </div>
+          </div>`;
+        wrapper.append(slide);
+      });
+
+      // 💡 여기서 Swiper에게 "업데이트해!" 라고 알림
+  if (window.swiper) {
+    swiper.update();  // 💥 이게 핵심이야!
+  }
+    }
+
     const langSelect = document.getElementById('langSelect');
     langSelect.addEventListener('change', e => {
-        document.getElementById('title').innerHTML = i18n[langSelect.value].title;
-    });
-    // 초기 타이틀 설정
-    document.getElementById('title').innerHTML = i18n[langSelect.value].title;
-
-    // 카드 문장 데이터 배열
-    const texts = [
-        "남들은 잘 사는 것 같아도, 다 자기만의 전쟁 중이야.\n오늘도 살아낸 너, 잘한 거야.",
-        "무기력한 날이 계속된다고 해서,\n네가 게으른 사람이 되는 건 아니야.",
-        "아무것도 안 해도 괜찮아.\n숨 쉬는 것도 요즘 같은 날엔 충분히 큰일이야.",
-        "마음이 늦게 따라올 때도 있어.\n조급하지 않아도 돼.",
-        "버틴다는 건,\n 멋진 선택이 아니라 필요한 선택일 때가 많아.\n그걸 해낸 넌 대단해.",
-        "남들이 안 본다고 해서\n너의 애씀까지 사라지는 건 아니야.",
-        "하루를 버텼다는 건,\n오늘 해야 할 가장 중요한 일을 해낸 거야.",
-        "괜찮은 척도 사실,\n얼마나 용기 내고 있는 건지 난 알아.",
-        "일이 안 풀리는 날이 계속돼도,\n그게 너 자체의 가치랑은 아무 상관없어.",
-        "가끔은 아무 일도 일어나지 않은 하루가,\n가장 평화로운 성과야.",
-        "오늘 안 울었으면,\n그걸로 이미 상 줘야 해.",
-        "하기 싫은 걸 ‘안 했다’는 것도\n사실 굉장한 결단력이야.",
-        "기분이 찌뿌둥한 날엔\n이불이 날 안아줘야 하거든.",
-        "무기력도 요즘 트렌드야.\n넌 그냥 유행 빠른 거야.",
-        "일단 버텼으면 대단한 거야.\n중간에 퇴사 안 했잖아, 인생에서.",
-        "네가 지금 이걸 읽고 있다는 건,\n아직 안 망했다는 증거야.",
-        "마음이 시무룩하면,\n아무 이유 없이 밥을 먹어도 돼.",
-        "잘한 게 없다는 말, 좀 거짓말 같아.\n오늘 숨 쉬었잖아.",
-        "아무것도 안 하고 싶다는 생각조차 안 나는 날도 있지.\n그럴 땐 그냥 멍이 정답이야.",
-        "계획이 없어서 망한 게 아니야.\n그냥 오늘은 마음이 회의 중이었던 거야.",
-        "괜찮다고 말 안 해도 돼.\n안 괜찮은 거, 괜찮아.",
-        "네가 뭘 하든 나는 네 편이야.\n네가 아무것도 안 해도... 난 그래도 네 편이야.",
-        "오늘 망한 거 같다고?\n내 기준에선 완전 성공인데?",
-        "아직 시작도 안 했다고?\n야 그게 똑똑한 거야. 체력 아끼는 거.",
-        "하루 종일 누워만 있었어도,\n그건 ‘에너지 재정비’였던 걸로 할게.",
-        "솔직히 이 정도면\n그냥 ‘사는 것 자체’가 엄청난 업적 아님?",
-        "자책할 시간에 라면 하나 끓여 먹어.\n탄수화물이 우선이야.",
-        "포기한 게 아니야. 전략적 유보지.\n지금 잠깐 기다리는 중이야.",
-        "그냥 숨 쉬고 있다는 것만으로도,\n세상에 기여하고 있어.",
-        "계획이 틀어진 게 아니라,\n우주가 널 위해 약간 우회로 튼 거야."
-    ];
-
-
-    // 카드 요소 생성 및 DOM에 삽입
-    const wrapper = document.getElementById('cards');
-    texts.forEach(txt => {
-      const slide = document.createElement('div');
-      slide.className = 'swiper-slide';
-      slide.innerHTML = `
-        <div class="card">
-          <div class="card-inner">
-            <div class="face front"></div>
-            <div class="face back">${txt}</div>
-          </div>
-        </div>`;
-      wrapper.append(slide);
-    });
-
-    // Swiper 초기화 (가로 슬라이드 레이아웃)
-    const swiper = new Swiper('.swiper-container', {
-      slidesPerView: 'auto',
-      grabCursor: true,
-      spaceBetween: -60,
-      speed: 500
-    });
-
-    // 클릭 이벤트: 카드 선택, 플립, 효과음 재생 & 팝업 표시
-    wrapper.addEventListener('click', e => {
-      if (hasFlipped) return; // 이미 뒤집은 카드가 있으면 무시
-      const slide = e.target.closest('.swiper-slide');
-      if (!slide) return;
-
-      // 이전 선택 해제 후 현재 슬라이드에 selected 클래스 추가
-      document.querySelectorAll('.swiper-slide.selected').forEach(s => s.classList.remove('selected'));
-      slide.classList.add('selected');
-
-      // 카드 플립 애니메이션
-      const inner = slide.querySelector('.card-inner');
-      // inner.classList.add('flipped');
-      inner.classList.add('active');
-      setTimeout(() => {
-        document.getElementById('overlay').classList.add('show'); // 0.5초 뒤 팝업
-      }, 500);
-      // hasFlipped = true;
-
-      // 배경 스크롤 잠금
-      document.body.classList.add('no-scroll');
-
-      // 효과음 재생
-      const sound = document.getElementById('sound');
-      sound.currentTime = 0;
-      sound.play().catch(() => {});
-
-      // 팝업창 표시: 뒷면 텍스트와 함께
-      const text = inner.querySelector('.back').textContent;
-      document.getElementById('overlayText').textContent = text;
-      document.getElementById('overlay').style.display = 'flex';
-    });
-
-    // ❤️ 공감 클릭 시
-    document.querySelector('.like-btn').addEventListener('click', () => {
-        const likedText = document.getElementById('overlayText').textContent;
-        // 콘솔 + GA 이벤트 전송
-        console.log('공감 누름:', likedText);
-        if (window.gtag) {
-            gtag("event", "like_button_click", {
-            event_category: "engagement",
-            event_label: likedText
-            });
-        }
-        alert("이 문장에 공감해 주셔서 고마워요 🥹");
-    });
-
-    // 📋 복사하기 클릭 시
-    document.querySelector('.copy-btn').addEventListener('click', () => {
-        const text = document.getElementById('overlayText').textContent;
-        navigator.clipboard.writeText(text).then(() => {
-            alert("🌿 위로 한 줄이 복사되었어요!\n당신의 하루에 작은 힘이 되길 바랄게요.");
-        });
-    });
-    
-    // 팝업 닫기 버튼 이벤트: 상태 초기화
-    document.getElementById('overlayClose').addEventListener('click', () => {
-      document.getElementById('overlay').style.display = 'none';
-      document.body.classList.remove('no-scroll');
-      // 활성화된 카드에서 active 제거
-      document.querySelector('.card-inner.active')?.classList.remove('active');
-      // 1. show 클래스 제거 (있다면)
-      document.getElementById('overlay').classList.remove('show');
-      
-
-      hasFlipped = false;
-      const prevFlip = document.querySelector('.card-inner.flipped');
-      if (prevFlip) prevFlip.classList.remove('flipped');
-      document.querySelectorAll('.swiper-slide.selected').forEach(s => s.classList.remove('selected'));
+      const lang = e.target.value;
+      document.getElementById('title').innerHTML = i18n[lang].title;
+      renderCardsByLang(lang);
+      // 언어별 폰트 클래스 적용
+      if (lang === 'ko') {
+        document.getElementById('title').classList.remove('var_font');
+        document.getElementById('overlayText').classList.remove('var_font');
+      } else {
+        document.getElementById('title').classList.add('var_font');
+        document.getElementById('overlayText').classList.add('var_font');
+      }
     });
 
     window.addEventListener('DOMContentLoaded', () => {
-    const count = 10;
-    for (let i = 0; i < count; i++) {
-      const circle = document.createElement('div');
-      circle.classList.add('blur-circle');
+      const defaultLang = 'ko';
+      document.getElementById('title').innerHTML = i18n[defaultLang].title;
+      renderCardsByLang(defaultLang);
 
-      // 랜덤 크기 (50~150px)
-      const size = Math.floor(Math.random() * 100) + 50;
-      circle.style.width = `${size}px`;
-      circle.style.height = `${size}px`;
+      const wrapper = document.getElementById('cards');
+      window.swiper = new Swiper('.swiper-container', {
+        slidesPerView: 'auto',
+        grabCursor: true,
+        spaceBetween: -60,
+        speed: 500
+      });
 
-      // 랜덤 위치 (viewport 기준)
-      const top = Math.random() * 100;
-      const left = Math.random() * 100;
-      circle.style.top = `${top}vh`;
-      circle.style.left = `${left}vw`;
+      wrapper.addEventListener('click', e => {
+        const slide = e.target.closest('.swiper-slide');
+        if (!slide) return;
+        document.querySelectorAll('.swiper-slide.selected').forEach(s => s.classList.remove('selected'));
+        slide.classList.add('selected');
 
-      document.body.appendChild(circle);
-    }
-  });
+        const inner = slide.querySelector('.card-inner');
+        inner.classList.add('active');
+        setTimeout(() => {
+          document.getElementById('overlay').classList.add('show');
+        }, 500);
+
+        document.body.classList.add('no-scroll');
+        const sound = document.getElementById('sound');
+        sound.currentTime = 0;
+        sound.play().catch(() => {});
+
+        const text = inner.querySelector('.back').textContent;
+        document.getElementById('overlayText').textContent = text;
+        document.getElementById('overlay').style.display = 'flex';
+      });
+
+      document.querySelector('.like-btn').addEventListener('click', () => {
+        const likedText = document.getElementById('overlayText').textContent;
+        console.log('공감 누름:', likedText);
+        if (window.gtag) {
+          gtag("event", "like_button_click", {
+            event_category: "engagement",
+            event_label: likedText
+          });
+        }
+        alert("이 문장에 공감해 주셔서 고마워요 🥹");
+      });
+
+      document.querySelector('.copy-btn').addEventListener('click', () => {
+        const text = document.getElementById('overlayText').textContent;
+        navigator.clipboard.writeText(text).then(() => {
+          alert("🌿 위로 한 줄이 복사되었어요!\n당신의 하루에 작은 힘이 되길 바랄게요.");
+        });
+      });
+
+      document.getElementById('overlayClose').addEventListener('click', () => {
+        document.getElementById('overlay').style.display = 'none';
+        document.body.classList.remove('no-scroll');
+        document.getElementById('overlay').classList.remove('show');
+        document.querySelector('.card-inner.active')?.classList.remove('active');
+        document.querySelectorAll('.swiper-slide.selected').forEach(s => s.classList.remove('selected'));
+      });
+
+      const count = 10;
+      for (let i = 0; i < count; i++) {
+        const circle = document.createElement('div');
+        circle.classList.add('blur-circle');
+        const size = Math.floor(Math.random() * 100) + 50;
+        circle.style.width = `${size}px`;
+        circle.style.height = `${size}px`;
+        circle.style.top = `${Math.random() * 100}vh`;
+        circle.style.left = `${Math.random() * 100}vw`;
+        document.body.appendChild(circle);
+      }
+    });
   </script>
 </body>
 </html>

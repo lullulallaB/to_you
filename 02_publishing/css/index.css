@@ -24,7 +24,6 @@ body::after {
   display: block;
 }
 
-
 *, *::before, *::after { box-sizing:inherit; }
 :root {
 --overlay-bg: rgba(0, 0, 0, 0.4);
@@ -38,23 +37,25 @@ body::after {
 body {padding: 2rem 2rem 2rem 2rem;font-family:'Apple SD Gothic Neo','Noto Sans KR','Pretendard',sans-serif;background: var(--main-bg);display:flex;flex-direction:column;align-items:center;position:relative;color:var(--text-color);background: #f3d7d3;/* justify-content: center; */}
 body.no-scroll { overflow:hidden; }
 
-.controls {
-position:absolute;
-top:1rem;
-right:1rem;
+.lang-control {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 99;
 }
-.controls select {
-font-size:1rem;
-border:none;
-padding:0.4rem 0.8rem;
-border-radius:6px;
-background:#fff;
-box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-cursor:pointer;
+.lang-control select {
+  font-size: 0.9rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  border: none;
+  cursor: pointer;
 }
-h1 {font-size:1.8rem;font-weight:bold;margin-bottom:0.5rem;text-align: center;font-family: 'Cafe24Ssurround', sans-serif;color: #fb8a94; position: relative;}
+h1 {font-size:1.8rem;font-weight:bold;margin: 2rem 0 0.5rem;text-align: center;font-family: 'Cafe24Ssurround', sans-serif;color: #fb8a94; position: relative;}
+h1.var_font{font-family: sans-serif;}
 h1 span{}
-h1::before{content: " ";position: absolute;top: -2px;left: -10px;width: calc(100% + 20px);height: 35px;background-color: #fff;z-index: -1;border-radius: 10px;box-shadow: 0 0 10px #FFD;}
+h1::before{content: " ";position: absolute;top: -2px;left: -10px;width: calc(100% + 20px);height: 100%;background-color: #fff;z-index: -1;border-radius: 10px;box-shadow: 0 0 10px #FFD;}
 h2 {font-size:1rem;font-weight:400;color:#555;margin-bottom:2rem;word-break: keep-all;text-align: center;line-height: 1.3;}
 .swiper-container {width:100%;padding: -8rem 0;}
 
@@ -158,6 +159,7 @@ padding:1rem;
 
 .close-btn {position:absolute;top: -60px;left: 50%;transform: translateX(-50%);border:none;font-size:1.5rem;cursor:pointer;color:#aaa;background: #fff;border-radius: 100%;width: 50px;height: 50px;}
 #overlayText {margin-bottom: 3rem;word-break:keep-all;font-size:1.1rem;font-family: 'Cafe24Ssurround';  white-space: pre-line;}
+#overlayText.var_font{font-family: sans-serif;}
 #overlay input {
 padding:0.6rem;
 border-radius:6px;
