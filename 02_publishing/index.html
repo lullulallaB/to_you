@@ -31,7 +31,7 @@
   </div>
       
       <h1 id="title">오늘도 잘 버틴 <span>당신</span>에게</h1>
-      <h2>바로 지금, 당신 곁에 머무르는<br/> 위로의 한 줄을 만나보세요.</h2>
+      <h2 class="subtitle">바로 지금, 당신 곁에 머무르는<br/> 위로의 한 줄을 만나보세요.</h2>
 
       <div class="swiper-container"><div class="swiper-wrapper" id="cards"></div></div>
       <audio id="sound" src="" preload="auto"></audio>
@@ -62,7 +62,7 @@
     const i18n = {
     ko: {
         title: '오늘도 잘 버틴 <span>당신</span>에게',
-        // 카드 문장 데이터 배열
+        subtitle: '바로 지금, 당신 곁에 머무르는<br/> 위로의 한 줄을 만나보세요.',
         texts: [
             "남들은 잘 사는 것 같아도, 다 자기만의 전쟁 중이야.\n오늘도 살아낸 너, 잘한 거야.",
             "무기력한 날이 계속된다고 해서,\n네가 게으른 사람이 되는 건 아니야.",
@@ -98,6 +98,7 @@
     },
     en: {
         title: 'To You Who Made It Through Today',
+        subtitle: 'Right now, receive a line of comfort that stays with you.',
         texts: [
           "Even if it seems like others have it all,\neveryone’s fighting their own battles.\nYou made it through. That’s enough.",
           "Feeling unmotivated doesn’t mean\nyou’re lazy. You’re still doing your best.",
@@ -133,6 +134,7 @@
     },
     ja: {
         title: '今日も頑張ったあなたへ',
+        subtitle: '今この瞬間、あなたのそばに寄り添う<br/>ひとことの癒しを受け取ってください。',
         texts: [
           "他人がうまくやっているように見えても、\nみんな自分だけの戦いをしてるんだよ。\n今日も乗り越えたあなた、すごいよ。",
           "やる気が出ない日が続いても、\nそれは怠けている証拠じゃない。",
@@ -169,6 +171,7 @@
     },
     zh: {
         title: '致今天也努力撑过来的你',
+        subtitle: '就在此刻，收到一句<br/>陪伴你身边的温柔安慰。',
         texts: [
           "即使别人看起来过得不错，\n其实每个人都有自己的战争。\n你撑过来了，已经很棒了。",
           "持续无力感，并不代表你懒。\n你已经够努力了。",
@@ -229,19 +232,31 @@
     }
 
     const langSelect = document.getElementById('langSelect');
-    langSelect.addEventListener('change', e => {
-      const lang = e.target.value;
-      document.getElementById('title').innerHTML = i18n[lang].title;
-      renderCardsByLang(lang);
-      // 언어별 폰트 클래스 적용
-      if (lang === 'ko') {
-        document.getElementById('title').classList.remove('var_font');
-        document.getElementById('overlayText').classList.remove('var_font');
-      } else {
-        document.getElementById('title').classList.add('var_font');
-        document.getElementById('overlayText').classList.add('var_font');
-      }
-    });
+langSelect.addEventListener('change', e => {
+  const lang = e.target.value;
+
+  document.getElementById('title').innerHTML = i18n[lang].title;
+  document.querySelectorAll('.subtitle').forEach(el => {
+    el.innerHTML = i18n[lang].subtitle;
+  });
+
+  renderCardsByLang(lang);
+
+  // 언어별 폰트 클래스 적용
+  const titleEl = document.getElementById('title');
+  const overlayEl = document.getElementById('overlayText');
+  const subtitleEls = document.querySelectorAll('.subtitle');
+
+  if (lang === 'ko') {
+    titleEl.classList.remove('var_font');
+    overlayEl.classList.remove('var_font');
+    subtitleEls.forEach(el => el.classList.remove('var_font'));
+  } else {
+    titleEl.classList.add('var_font');
+    overlayEl.classList.add('var_font');
+    subtitleEls.forEach(el => el.classList.add('var_font'));
+  }
+});
 
     window.addEventListener('DOMContentLoaded', () => {
       const defaultLang = 'ko';

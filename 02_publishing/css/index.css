@@ -1,3 +1,6 @@
+/* --------------------------------------------
+  1. Web Font 선언
+-------------------------------------------- */
 @font-face {
   font-family: 'Cafe24Ssurround';
   src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24Ssurround.woff') format('woff');
@@ -5,8 +8,51 @@
   font-style: normal;
 }
 
-html, body { margin:0; padding:0; overflow-x:hidden; box-sizing:border-box; height:100%; }
-
+/* --------------------------------------------
+  2. 기본 Reset & 글로벌 스타일
+-------------------------------------------- */
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  height: 100%;
+}
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+:root {
+  --overlay-bg: rgba(0, 0, 0, 0.4);
+  --main-bg: #fef6f2;
+  --card-back: #fff9f7;
+  --text-color: #333;
+  --accent: #ff90b3;
+  --btn-bg: #ff5e8e;
+  --btn-text: #fff;
+}
+.var_font{
+  white-space: pre-wrap;       /* 줄바꿈 유지 + 자동 줄바꿈 허용 */
+  word-break: break-word;      /* 단어 중간이라도 줄바꿈 허용 */
+  overflow-wrap: break-word;   /* 긴 단어도 줄바꿈 가능 */
+  hyphens: auto;               /* 브라우저가 자동으로 하이픈 삽입 가능 (지원 브라우저 한정) */
+}
+/* --------------------------------------------
+  3. 전체 Layout 구조 및 배경
+-------------------------------------------- */
+body {
+  padding: 2rem;
+  font-family: 'Apple SD Gothic Neo','Noto Sans KR','Pretendard',sans-serif;
+  background: var(--main-bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  color: var(--text-color);
+  background: #f3d7d3;
+}
+body.no-scroll {
+  overflow: hidden;
+}
 body::after {
   content: " ";
   position: fixed;
@@ -14,7 +60,7 @@ body::after {
   left: 0;
   width: 250px;
   height: 250px;
-  background-image: url('../img/Alone-cuate.svg'); /* 경로 확인 필요 */
+  background-image: url('../img/Alone-cuate.svg');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: 0 0;
@@ -24,19 +70,9 @@ body::after {
   display: block;
 }
 
-*, *::before, *::after { box-sizing:inherit; }
-:root {
---overlay-bg: rgba(0, 0, 0, 0.4);
---main-bg: #fef6f2;
---card-back: #fff9f7;
---text-color: #333;
---accent: #ff90b3;
---btn-bg: #ff5e8e;
---btn-text: #fff;
-}
-body {padding: 2rem 2rem 2rem 2rem;font-family:'Apple SD Gothic Neo','Noto Sans KR','Pretendard',sans-serif;background: var(--main-bg);display:flex;flex-direction:column;align-items:center;position:relative;color:var(--text-color);background: #f3d7d3;/* justify-content: center; */}
-body.no-scroll { overflow:hidden; }
-
+/* --------------------------------------------
+  4. 상단 언어 선택 및 타이틀 영역
+-------------------------------------------- */
 .lang-control {
   position: fixed;
   top: 1rem;
@@ -52,103 +88,134 @@ body.no-scroll { overflow:hidden; }
   border: none;
   cursor: pointer;
 }
-h1 {font-size:1.8rem;font-weight:bold;margin: 2rem 0 0.5rem;text-align: center;font-family: 'Cafe24Ssurround', sans-serif;color: #fb8a94; position: relative;}
-h1.var_font{font-family: sans-serif;}
-h1 span{}
-h1::before{content: " ";position: absolute;top: -2px;left: -10px;width: calc(100% + 20px);height: 100%;background-color: #fff;z-index: -1;border-radius: 10px;box-shadow: 0 0 10px #FFD;}
-h2 {font-size:1rem;font-weight:400;color:#555;margin-bottom:2rem;word-break: keep-all;text-align: center;line-height: 1.3;}
-.swiper-container {width:100%;padding: -8rem 0;}
+h1 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin: 2rem 0 0.5rem;
+  text-align: center;
+  font-family: 'Cafe24Ssurround', sans-serif;
+  color: #fb8a94;
+  position: relative;
+}
+h1.var_font {
+  font-family: sans-serif;
+}
+h1::before {
+  content: " ";
+  position: absolute;
+  top: -2px;
+  left: -10px;
+  width: calc(100% + 20px);
+  height: 100%;
+  background-color: #fff;
+  z-index: -1;
+  border-radius: 10px;
+  box-shadow: 0 0 10px #FFD;
+}
+h2 {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #555;
+  margin-bottom: 1rem;
+  word-break: keep-all;
+  text-align: center;
+  line-height: 1.3;
+}
 
+/* --------------------------------------------
+  5. 카드 캐러셀 Swiper
+-------------------------------------------- */
+.swiper-container {
+  width: 100%;
+  padding: -8rem 0;
+}
 .swiper-slide {
-width:140px;
-aspect-ratio:2.5/3.5;
-cursor:pointer;
-transition:transform 0.3s;
-z-index:1;
+  width: 140px;
+  aspect-ratio: 2.5 / 3.5;
+  cursor: pointer;
+  transition: transform 0.3s;
+  z-index: 1;
 }
 .swiper-slide:hover {
-transform:scale(1.1) translateY(-10px);
-z-index:10;
+  transform: scale(1.1) translateY(-10px);
+  z-index: 10;
 }
 .swiper-slide.selected {
-transform:scale(1.2) !important;
-z-index:5;
+  transform: scale(1.2) !important;
+  z-index: 5;
 }
 .swiper-slide.selected:hover {
-transform:scale(1.3) translateY(-15px) !important;
-z-index:15;
+  transform: scale(1.3) translateY(-15px) !important;
+  z-index: 15;
 }
 
+/* --------------------------------------------
+  6. 카드 UI
+-------------------------------------------- */
 .card {
-width:100%;
-height:100%;
-perspective:800px;
+  width: 100%;
+  height: 100%;
+  perspective: 800px;
 }
-/* .card-inner {
-width:100%;
-height:100%;
-transition:transform 0.6s;
-transform-style:preserve-3d;
-position:relative;
-}
-.card-inner.flipped {
-transform:rotateY(180deg);
-} */
 .card-inner {
-  width:100%;
-  height:100%;
+  width: 100%;
+  height: 100%;
   transform: translateY(20px);
-  /* opacity: 0; */
   transition: all 0.5s ease;
 }
 .card-inner.active {
   transform: translateY(0);
-  /* opacity: 1; */
 }
-
 .face {
-position:absolute;
-width:100%;
-height:100%;
-backface-visibility:hidden;
-display:flex;
-align-items:center;
-justify-content:center;
-border-radius:12px;
-font-size:0.9rem;
-padding:0.5rem;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  padding: 0.5rem;
 }
 .front {
-background:linear-gradient(135deg,#ff90b3,#ffcc70);
-border:2px solid #fff;
-color:#fff;
+  background: linear-gradient(135deg, #ff90b3, #ffcc70);
+  border: 2px solid #fff;
+  color: #fff;
 }
 .back {
-transform:rotateY(180deg);
-background: var(--card-back);
-border:2px solid #f3d7d3;
-color:var(--text-color);
-padding:1rem;
-text-align:center;
+  transform: rotateY(180deg);
+  background: var(--card-back);
+  border: 2px solid #f3d7d3;
+  color: var(--text-color);
+  padding: 1rem;
+  text-align: center;
 }
 
+/* --------------------------------------------
+  7. 팝업 (오버레이)
+-------------------------------------------- */
 #overlay {
-display:none;
-position:fixed;
-top:0;
-left:0;
-right:0;
-bottom:0;
-background:var(--overlay-bg);
-align-items:center;
-justify-content:center;
-z-index:100;
-padding:1rem;
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: var(--overlay-bg);
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 1rem;
 }
-.overlay-content {position:relative;background: #fff;padding:5rem 1.5rem;border-radius: 22px;max-width:90%;width:100%;max-height:90%;/* overflow-y:auto; */color:#333;text-align:center;box-shadow: 0 4px 10px rgba(0,0,0,0.2);}
-
-/* 팝업창 전체를 플립 카드처럼 보이게 만들기 */
-#overlay .overlay-content {
+.overlay-content {
+  position: relative;
+  background: #fff;
+  padding: 5rem 1.5rem;
+  border-radius: 22px;
+  max-width: 90%;
+  width: 100%;
+  max-height: 90%;
+  color: #333;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
   transform: rotateY(90deg);
   transform-style: preserve-3d;
   transition: transform 0.6s ease;
@@ -156,47 +223,47 @@ padding:1rem;
 #overlay.show .overlay-content {
   transform: rotateY(0deg);
 }
-
-.close-btn {position:absolute;top: -60px;left: 50%;transform: translateX(-50%);border:none;font-size:1.5rem;cursor:pointer;color:#aaa;background: #fff;border-radius: 100%;width: 50px;height: 50px;}
-#overlayText {margin-bottom: 3rem;word-break:keep-all;font-size:1.1rem;font-family: 'Cafe24Ssurround';  white-space: pre-line;}
-#overlayText.var_font{font-family: sans-serif;}
-#overlay input {
-padding:0.6rem;
-border-radius:6px;
-border:1px solid #ccc;
-margin-bottom:1rem;
-width:100%;
-font-size:1rem;
-}
-.share-btn {
-padding:0.6rem 1.2rem;
-font-size:1rem;
-border:none;
-border-radius:6px;
-background:var(--btn-bg);
-color:var(--btn-text);
-cursor:pointer;
-transition: all 0.2s;
-}
-.share-btn:hover {
-background:#ff4379;
-}
-
-.blur-circle {
+.close-btn {
   position: absolute;
-  background: rgba(255, 255, 249, 0.25);
-  border-radius: 50%;
-  filter: blur(10px);
-  pointer-events: none;
-  z-index: 0;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #aaa;
+  background: #fff;
+  border-radius: 100%;
+  width: 50px;
+  height: 50px;
+}
+#overlayText {
+  margin-bottom: 3rem;
+  word-break: keep-all;
+  font-size: 1.1rem;
+  font-family: 'Cafe24Ssurround';
+  white-space: pre-line;
+}
+#overlayText.var_font {
+  font-family: sans-serif;
 }
 
+/* --------------------------------------------
+  8. 공유/공감 버튼
+-------------------------------------------- */
+#overlay input {
+  padding: 0.6rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  margin-bottom: 1rem;
+  width: 100%;
+  font-size: 1rem;
+}
 .share-buttons {
   display: flex;
   gap: 0.5rem;
   justify-content: center;
 }
-
 .share-buttons button {
   padding: 0.6rem 1rem;
   border: none;
@@ -205,17 +272,26 @@ background:#ff4379;
   cursor: pointer;
   transition: background 0.2s;
 }
-
 .like-btn {
   background: #ffd1e6;
   color: #c5165f;
 }
-
 .copy-btn {
   background: #d6ecff;
   color: #1a73e8;
 }
-
 .share-buttons button:hover {
   opacity: 0.85;
+}
+
+/* --------------------------------------------
+  9. 시각 효과 (배경 블러 원)
+-------------------------------------------- */
+.blur-circle {
+  position: absolute;
+  background: rgba(255, 255, 249, 0.25);
+  border-radius: 50%;
+  filter: blur(10px);
+  pointer-events: none;
+  z-index: 0;
 }
